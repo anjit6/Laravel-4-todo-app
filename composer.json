@@ -1,0 +1,24 @@
+{
+	"require": {
+		"laravel/framework": "4.0.*",
+		"way/generators": "dev-master",
+		"kriswallsmith/assetic": "1.1.*@dev"
+	},
+	"require-dev": {
+		"way/guard-laravel": "dev-master"
+	},
+	"autoload": {
+		"classmap": [
+			"app/commands",
+			"app/controllers",
+			"app/models",
+			"app/database/migrations",
+			"app/database/seeds",
+			"app/tests/TestCase.php"
+		]
+	},
+	"scripts": {
+		"post-update-cmd": "php artisan optimize"
+	},
+	"minimum-stability": "dev"
+}

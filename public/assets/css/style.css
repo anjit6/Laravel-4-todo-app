@@ -1,0 +1,18 @@
+body {
+	padding: 60px 0;
+	margin: 0;
+}
+
+.app-title {
+	color: #F5F5F5;
+	font-size: 24px;
+	padding-top: 4px;
+	position: relative;
+	top: 7px;
+	right: 28px;
+}
+
+.add-todo-btn {
+	margin-left: 6px;
+	vertical-align: middle;
+}
