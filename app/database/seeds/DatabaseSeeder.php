@@ -9,7 +9,8 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		// $this->call('UserTableSeeder');
+		$this->call('TasksTableSeeder');
+		$this->command->info('Tasks table seeded with sample tasks!');
 	}
 
 }

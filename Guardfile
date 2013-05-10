@@ -1,6 +1,6 @@
-guard :concat, :type => "css", :files => %w[more], :input_dir => "public/css", :output => "public/css/styles.min"
+guard :concat, :type => "css", :files => %w[bootstrap.min bootstrap-responsive.min style], :input_dir => "public/css", :output => "public/css/styles.min"
 
-guard :concat, :type => "js", :files => %w[], :input_dir => "public/js", :output => "public/js/scripts.min"
+guard :concat, :type => "js", :files => %w[jquery/jquery-1.9.1.min bootstrap/bootstrap.min app/app], :input_dir => "public/js", :output => "public/js/scripts.min"
 
 # Refresh the browser on save
 guard 'livereload' do

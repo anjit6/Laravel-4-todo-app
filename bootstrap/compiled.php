@@ -6313,9 +6313,20 @@ class FileLoader implements LoaderInterface
         // precedence over them if we are currently in an environments setup.
         $file = "{$path}/{$environment}/{$group}.php";
         if ($this->files->exists($file)) {
-            $items = array_merge($items, $this->files->getRequire($file));
+            $items = $this->mergeEnvironment($items, $file);
         }
         return $items;
+    }
+    /**
+     * Merge the items in the given file into the items.
+     *
+     * @param  array   $items
+     * @param  string  $file
+     * @return array
+     */
+    protected function mergeEnvironment(array $items, $file)
+    {
+        return array_replace_recursive($items, $this->files->getRequire($file));
     }
     /**
      * Determine if the given group exists.
@@ -10134,7 +10145,6 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
             $saved = $this->performUpdate($query);
         } else {
             $saved = $this->performInsert($query);
-            $this->exists = $saved;
         }
         if ($saved) {
             $this->finishSave($options);
@@ -10211,6 +10221,10 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         } else {
             $query->insert($attributes);
         }
+        // We will go ahead and set the exists property to true, so that it is set when
+        // the created event is fired, just in case the developer tries to update it
+        // during the event. This will allow them to do so and run an update here.
+        $this->exists = true;
         $this->fireModelEvent('created', false);
         return true;
     }
@@ -10841,8 +10855,9 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         // If the "attribute" exists as a method on the model, we will just assume
         // it is a relationship and will load and return results from the query
         // and hydrate the relationship's value on the "relationships" array.
-        if (method_exists($this, $key)) {
-            $relations = $this->{$key}()->getResults();
+        $camelKey = camel_case($key);
+        if (method_exists($this, $camelKey)) {
+            $relations = $this->{$camelKey}()->getResults();
             return $this->relations[$key] = $relations;
         }
     }
@@ -11623,16 +11638,22 @@ class Store extends SymfonySession
         foreach ($this->get('flash.old', array()) as $old) {
             $this->forget($old);
         }
-        $this->put('flash.old', $this->get('flash.new'));
+        $this->put('flash.old', $this->get('flash.new', array()));
         $this->put('flash.new', array());
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function has($name)
+    {
+        return !is_null($this->get($name));
     }
     /**
      * {@inheritdoc}
      */
     public function get($name, $default = null)
     {
-        $value = parent::get($name);
-        return is_null($value) ? value($default) : $value;
+        return array_get($this->all(), $name, $default);
     }
     /**
      * Determine if the session contains old input.
@@ -11689,7 +11710,9 @@ class Store extends SymfonySession
      */
     public function put($key, $value)
     {
-        $this->set($key, $value);
+        $all = $this->all();
+        array_set($all, $key, $value);
+        $this->replace($all);
     }
     /**
      * Push a value onto a session array.
@@ -11778,7 +11801,9 @@ class Store extends SymfonySession
      */
     public function forget($key)
     {
-        return $this->remove($key);
+        $all = $this->all();
+        array_forget($all, $key);
+        $this->replace($all);
     }
     /**
      * Remove all of the items from the session.
@@ -12322,9 +12347,9 @@ class Encrypter
         // We'll go ahead and remove the PKCS7 padding from the encrypted value before
         // we decrypt it. Once we have the de-padded value, we will grab the vector
         // and decrypt the data, passing back the unserialized from of the value.
-        $value = $this->stripPadding(base64_decode($payload['value']));
+        $value = base64_decode($payload['value']);
         $iv = base64_decode($payload['iv']);
-        return unserialize(rtrim($this->mcryptDecrypt($value, $iv)));
+        return unserialize($this->stripPadding($this->mcryptDecrypt($value, $iv)));
     }
     /**
      * Run the mcrypt decryption routine for the value.
@@ -12387,7 +12412,7 @@ class Encrypter
     protected function stripPadding($value)
     {
         $pad = ord($value[($len = strlen($value)) - 1]);
-        return $this->paddingIsValid($pad, $value) ? substr($value, 0, -$pad) : $value;
+        return $this->paddingIsValid($pad, $value) ? substr($value, 0, strlen($value) - $pad) : $value;
     }
     /**
      * Determine if the given padding for a value is valid.
@@ -12398,7 +12423,8 @@ class Encrypter
      */
     protected function paddingIsValid($pad, $value)
     {
-        return $pad and $pad <= $this->block and preg_match('/' . chr($pad) . '{' . $pad . '}$/', $value);
+        $beforePad = strlen($value) - $pad;
+        return substr($value, $beforePad) == str_repeat(substr($value, -1), $pad);
     }
     /**
      * Verify that the encryption payload is valid.

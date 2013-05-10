@@ -60,7 +60,11 @@ return array(
 	| you'd simply add `array('main')` (the extension may be left off).
 	|
 	*/
-	'js_concat' => Way\Helpers\File::withoutExtensionsFrom('public/js'),
+	'js_concat' => [
+		'jquery/jquery-1.9.1.min',
+		'bootstrap/bootstrap.min',
+		'app/app'
+	],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -74,7 +78,11 @@ return array(
 	| you'd simply add `array('buttons')` (the extension may be left off).
 	|
 	*/
-	'css_concat' => Way\Helpers\File::withoutExtensionsFrom('public/css'),
+	'css_concat' => [
+		'bootstrap.min',
+		'bootstrap-responsive.min',
+		'style'
+	],
 
 	/*
 	|--------------------------------------------------------------------------

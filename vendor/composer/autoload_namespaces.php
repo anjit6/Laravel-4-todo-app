@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Whoops' => $vendorDir . '/filp/whoops/src',
+    'Way\\Tests' => $vendorDir . '/way/laravel-test-helpers/src',
     'Way\\Generators' => $vendorDir . '/way/generators/src',
     'Way' => $vendorDir . '/way/guard-laravel/src',
     'Symfony\\Component\\Translation\\' => $vendorDir . '/symfony/translation',
@@ -29,6 +30,7 @@ return array(
     'Normalizer' => $vendorDir . '/patchwork/utf8/class',
     'Mustache' => $vendorDir . '/mustache/mustache/src',
     'Monolog' => $vendorDir . '/monolog/monolog/src',
+    'Mockery' => $vendorDir . '/mockery/mockery/library',
     'Illuminate' => $vendorDir . '/laravel/framework/src',
     'Doctrine\\DBAL\\' => $vendorDir . '/doctrine/dbal/lib',
     'Doctrine\\Common\\Lexer\\' => $vendorDir . '/doctrine/lexer/lib',
@@ -39,5 +41,4 @@ return array(
     'Doctrine\\Common\\' => $vendorDir . '/doctrine/common/lib',
     'ClassPreloader' => $vendorDir . '/classpreloader/classpreloader/src',
     'Carbon' => $vendorDir . '/nesbot/carbon',
-    'Assetic' => $vendorDir . '/kriswallsmith/assetic/src',
 );

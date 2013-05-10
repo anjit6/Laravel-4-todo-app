@@ -1,13 +1,25 @@
-## Laravel 4.x
+## Laravel 4 TODO Application
+This is a sample todo application developed using Laravel 4 PHP framework.
 
-### A Framework For Web Artisans
+### Install
+[Laravel 4](http://four.laravel.com) PHP framework requires `PHP MyCrypt` extension to be installed. Install [Composer](htt://getcomposer.org) for seemless package managemet.
 
-[Official Documentation](http://four.laravel.com) (Under Active Development)
+* `git clone https://github.com/anjit6/Laravel-4-todo-app.git /your/webroot/path/laravel-todo`
+* `cd /your/webroot/path/laravel-todo`
+* Change database credentails in `app/config/database.php`
+* Update the packages `composer update` (assuming `composer` is installed to `/usr/local/bin`)
+* `php artisan migrate`
+* `php artisan seed`
 
-### Contributing To Laravel
+Check the application at: [http:localhost/laravel-todo/public](http:localhost/laravel-todo/public)
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+### Version 1.0
+The following features are included in this version:
 
-### License
+* Display list of Tasks
+* Add a new task with a title
+* Select a task to view details
 
-The Laravel framework is open-sourced software license under the [MIT license](http://opensource.org/licenses/MIT)
+### Packages used
+
+*For any issues / suggestions / improvements please email anji.t6@gmail.com.*

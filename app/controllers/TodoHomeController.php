@@ -34,7 +34,12 @@ class TodoHomeController extends BaseController {
 
 			$todo->save();
 
-			return Redirect::to('/');	
+			Mail::send('emails.auth.reminder', array("token" => "abc"), function($m)
+			{
+				$m->to('anji.t6@gmail.com', 'Anji')->subject('Welcome!');
+			});
+
+			return Redirect::to('/');
 		}
 	}
 }

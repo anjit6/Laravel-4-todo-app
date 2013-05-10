@@ -1,8 +1,7 @@
 {
 	"require": {
 		"laravel/framework": "4.0.*",
-		"way/generators": "dev-master",
-		"kriswallsmith/assetic": "1.1.*@dev"
+		"way/generators": "dev-master"
 	},
 	"require-dev": {
 		"way/guard-laravel": "dev-master"

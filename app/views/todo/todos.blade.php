@@ -8,7 +8,7 @@
 			<input type="submit" name="submit" value="Add Todo" class="btn btn-success add-todo-btn" />
 		</form>
 	</div>
-	<div class="todos-list-cnt">
+	<div class="todos-list-cnt ">
 		<ul class="todos-list">
 			@each('todo.todo', $todos, 'todo')
 		</ul>

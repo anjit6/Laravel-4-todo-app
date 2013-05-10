@@ -7,7 +7,7 @@ class Task extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'task';
+	// protected $table = 'tasks';
 
 	/**
 	 * Override default primary key 'id'
@@ -15,5 +15,7 @@ class Task extends Eloquent {
 	 * @var string
 	 */
 	protected $primaryKey = 'tsk_id';
+
+	protected $fillable = array('description_tsk', 'status_tsk', 'url_tsk');
 
 }

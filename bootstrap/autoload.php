@@ -32,12 +32,6 @@ if (file_exists($compiled = __DIR__.'/compiled.php'))
 	require $compiled;
 }
 
-if (file_exists($cssmin = __DIR__.'/cssmin-v3.0.1-minified.php'))
-{
-	require $cssmin;
-}
-
-
 /*
 |--------------------------------------------------------------------------
 | Setup Patchwork UTF-8 Handling
