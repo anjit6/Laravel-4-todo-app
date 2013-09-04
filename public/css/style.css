@@ -16,3 +16,15 @@ body {
 	margin-left: 6px;
 	vertical-align: middle;
 }
+
+.todos-list {
+	list-style: none;
+	margin: 0;
+}
+
+.todo {
+	margin-bottom: 5px;
+	background-color: #efefef;
+	border: 1px solid #999999;
+	padding: 4px 10px;
+}

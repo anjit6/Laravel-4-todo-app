@@ -14,6 +14,6 @@
 		</ul>
 	</div>
 
+	{{-- Pagination Links --}}
 	{{ $todos->links() }}
 @stop
-
